@@ -65,6 +65,7 @@ function main() {
   var elec3Z = 0.0;
 
   sphereWorldMatrix[0] = utils.MakeWorld( 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5);
+  sphereNormalMatrix[0] = utils.invertMatrix(utils.transposeMatrix(sphereWorldMatrix[0]));
 
   var canvas = document.getElementById("c");
   var gl = canvas.getContext("webgl2");
@@ -150,11 +151,11 @@ function main() {
       objCoord3 = utils.multiplyMatrixVector(transform, objCoord3);
         
     sphereWorldMatrix[1] = utils.MakeWorld( objCoord1[0], objCoord1[1], objCoord1[2], 0.0, 0.0, 0.0, 0.1);
-    sphereNormalMatrix[0] = utils.invertMatrix(utils.transposeMatrix(sphereWorldMatrix[1]));
+    sphereNormalMatrix[1] = utils.invertMatrix(utils.transposeMatrix(sphereWorldMatrix[1]));
     sphereWorldMatrix[2] = utils.MakeWorld( objCoord2[0], objCoord2[1], objCoord2[2], 0.0, 0.0, 0.0, 0.1);
-    sphereNormalMatrix[1] = utils.invertMatrix(utils.transposeMatrix(sphereWorldMatrix[2]));
+    sphereNormalMatrix[2] = utils.invertMatrix(utils.transposeMatrix(sphereWorldMatrix[2]));
     sphereWorldMatrix[3] = utils.MakeWorld( objCoord3[0], objCoord3[1], objCoord3[2], 0.0, 0.0, 0.0, 0.1);
-    sphereNormalMatrix[2] = utils.invertMatrix(utils.transposeMatrix(sphereWorldMatrix[3]));
+    sphereNormalMatrix[3] = utils.invertMatrix(utils.transposeMatrix(sphereWorldMatrix[3]));
     lastUpdateTime = currentTime;               
   }
 
@@ -169,8 +170,7 @@ function main() {
       var projectionMatrix = utils.multiplyMatrices(perspectiveMatrix, viewWorldMatrix);
       gl.uniformMatrix4fv(matrixLocation, gl.FALSE, utils.transposeMatrix(projectionMatrix));
       
-      if (i == 0) gl.uniformMatrix4fv(normalMatrixPositionHandle, gl.FALSE, utils.transposeMatrix(sphereWorldMatrix[i]));
-      else gl.uniformMatrix4fv(normalMatrixPositionHandle, gl.FALSE, utils.transposeMatrix(sphereNormalMatrix[i - 1]));
+      gl.uniformMatrix4fv(normalMatrixPositionHandle, gl.FALSE, utils.transposeMatrix(sphereNormalMatrix[i]));
 
       gl.uniform3fv(materialDiffColorHandle, sphereMaterialColor);
       gl.uniform3fv(lightColorHandle,  directionalLightColor);

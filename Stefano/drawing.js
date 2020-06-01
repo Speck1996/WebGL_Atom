@@ -73,7 +73,7 @@ function main() {
 
 
   sphereWorldMatrix[0] = utils.MakeWorld( 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-  sphereNormalMatrix[0] =  utils.transposeMatrix(sphereWorldMatrix[0]);
+  sphereNormalMatrix[0] =  utils.invertMatrix(utils.transposeMatrix(sphereWorldMatrix[0]));
 
 
 
