@@ -4,11 +4,10 @@ precision highp float;
 
 in vec3 fsPos;
 in vec3 fsNormal;
-// TODO textures
-//in vec2 fsUv;
+in vec2 fsUv;
 out vec4 outColor;
 
-//uniform sampler2D uTexture;
+uniform sampler2D uTexture;
 uniform vec3 eyePos;
 
 uniform vec4 ambientType;
@@ -171,13 +170,12 @@ vec4 compAmbient(vec4 ambColor, vec3 normalVec) {
 
 
 void main() {
-// TODO texture
-//  vec4 texcol = texture(uTexture, fsUv);
+  vec4 texcol = texture(uTexture, fsUv);
 
-	vec4 diffColor = diffuseColor * (1.0-DTexMix); //+ texcol * DTexMix;
-	vec4 ambColor = ambientMatColor * (1.0-DTexMix); // + texcol * DTexMix;
+	vec4 diffColor = diffuseColor * (1.0-DTexMix) + texcol * DTexMix;
+	vec4 ambColor = ambientMatColor * (1.0-DTexMix)  + texcol * DTexMix;
 	vec4 emit = (emitColor * (1.0-DTexMix) +
-				  //  texcol * DTexMix *
+				    texcol * DTexMix *
 				   			max(max(emitColor.r, emitColor.g), emitColor.b)) * emissionType.r;
 //				   		   (0.299*emitColor.r + 0.587*emitColor.g + 0.114*emitColor.b);
 
