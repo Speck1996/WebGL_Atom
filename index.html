@@ -128,6 +128,22 @@
 
       }
 
+      #close {
+        float:right;
+        font-size: 22;
+        display:inline-block;
+        padding:10px 10px;
+        background:#ccc;
+      }
+
+      #close:hover {
+    float:right;
+    display:inline-block;
+    padding:10px 10px;
+    background:#ccc;
+    color:#fff;
+}
+
 
       /* Style the button that is used to open the sidepanel */
       #openbot {
@@ -163,9 +179,9 @@
 
 <body>
   <div class="wrapper">
-    <canvas id="c" >    </canvas>
+    <canvas id="c" onmouseenter='uiTools.closeSideNav(event);' >    </canvas>
 
-    <div id="mySidepanel" class="sidepanel" onmouseleave="uiTools.closeSideNav(event);" >
+    <div id="mySidepanel" class="sidepanel" onmouseleave="uiTools.fixedCloseSideNav(event);" >
       <p>
           Models
       </p>
@@ -180,10 +196,8 @@
           <p >
               Orbits on\off
           </p>
-      <div class="container" width="64" height="64" background-color="white">
       <img src="assets\icons\Orbiticon.png" title='Orbits visibility can be switched by pressing o'
                alt="Switch Orbit Visibility" width="64" height="64" onclick="uiTools.changeOrbitState();">
-      </div>
       <p >
           Adjust Speed Coefficient
       </p>
@@ -194,7 +208,8 @@
     </div>
 
 
-    <div id="botPanel" class="sidepanel" onmouseleave="uiTools.closeBotNav(event);" >
+    <div id="botPanel" class="sidepanel"  >
+      <span id='close' onclick='uiTools.closeBotNav(event);'>x</span>
 
       <table class="center" border="1">
         <!-- To be deleted -->
